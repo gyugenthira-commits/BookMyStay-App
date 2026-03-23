@@ -1,3 +1,31 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Map;
+class RoomInventoryApp {
+
+    private Map<String, Integer> roomAvailability;
+
+    public RoomInventoryApp() {
+        roomAvailability = new HashMap<>();
+        initializeInventory();
+    }
+
+    private void initializeInventory() {
+        roomAvailability.put("Single", 5);
+        roomAvailability.put("Double", 3);
+        roomAvailability.put("Suite", 2);
+    }
+
+    public Map<String, Integer> getRoomAvailability() {
+        return roomAvailability;
+    }
+
+    public void updateAvailability(String roomType, int count) {
+        roomAvailability.put(roomType, count);
+    }
+}
+
 abstract class Room {
     protected int numberOfBeds;
     protected int squareFeet;
@@ -36,26 +64,27 @@ class SuiteRoom extends Room {
 
 public class HotelBookingApp {
     public static void main(String[] args) {
+
+        RoomInventoryApp inventory = new RoomInventoryApp();
+
         Room single = new SingleRoom();
         Room doubleRoom = new DoubleRoom();
         Room suite = new SuiteRoom();
 
-        int singleAvailability = 5;
-        int doubleAvailability = 3;
-        int suiteAvailability = 2;
+        Map<String, Integer> availability = inventory.getRoomAvailability();
 
         System.out.println("Single Room:");
         single.displayRoomDetails();
-        System.out.println("Available: " + singleAvailability);
+        System.out.println("Available: " + availability.get("Single"));
         System.out.println();
 
         System.out.println("Double Room:");
         doubleRoom.displayRoomDetails();
-        System.out.println("Available: " + doubleAvailability);
+        System.out.println("Available: " + availability.get("Double"));
         System.out.println();
 
         System.out.println("Suite Room:");
         suite.displayRoomDetails();
-        System.out.println("Available: " + suiteAvailability);
+        System.out.println("Available: " + availability.get("Suite"));
     }
 }
